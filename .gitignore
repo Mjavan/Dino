@@ -1,0 +1,11 @@
+# Ignore notebooks
+*.ipynb
+
+# Ignore directories
+results/
+runs/
+old_cods/
+__pycache__/
+
+# Ignore Python cache files
+*.pyc

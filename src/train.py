@@ -156,61 +156,21 @@ class Trainer:
 
 parser = argparse.ArgumentParser(description="Run Faster-RCNN for training!") 
 
-parser.add_argument(
-    "--exp_name",
-    type=str,
-    default=None,
-    help="Experiment name (e.g. exp_001)"
-    )
+parser.add_argument("--exp_name", type=str, default=None, help="Experiment name (e.g. exp_001)")
 
-parser.add_argument(
-    "--epochs",
-    type=int,
-    default=7,
-    help="Number of epochs for training"
-    )
+parser.add_argument("--epochs", type=int, default=7, help="Number of epochs for training")
 
-parser.add_argument(
-    "--lr",
-    type=float,
-    default=5e-5,
-    help="Learning rate for training"
-    )
+parser.add_argument("--lr", type=float, default=5e-5, help="Learning rate for training")
 
-parser.add_argument(
-    "--samples",
-    type=int,
-    default=2000,
-    help="Number of samples that we want to consider for training and evaluation of the model"
-    )
+parser.add_argument("--samples", type=int, default=2000, help="Number of samples for training and inference")
 
-parser.add_argument(
-    "--train_seed",
-    type=int,
-    default=42,
-    help="Seed for fixing training for reproducibility."
-    )
+parser.add_argument("--train_seed", type=int, default=42, help="Seed for reproducibility of training")
 
-parser.add_argument(
-    "--split_seed",
-    type=int,
-    default=42,
-    help="Seed for fixing split of data for reproducibility."
-    )
+parser.add_argument("--split_seed", type=int, default=42, help="Seed for reproducibility of spliting data")
 
-parser.add_argument(
-    "--freeze_backbone",
-    type=bool,
-    default=False,
-    help="True, if we want to freeze backbobe, false otherwise."
-    )
+parser.add_argument("--freeze_backbone", type=bool, default=False, help="True, to freeze backbobe, false otherwise.")
 
-parser.add_argument(
-    "--score_thresh",
-    type=float,
-    default=0.3,
-    help="Score that we use to filter bboexs as a postprocess step."
-    )
+parser.add_argument("--score_thresh", type=float, default=0.3, help="Score to filter bboexs")
 
 args = parser.parse_args()
 
