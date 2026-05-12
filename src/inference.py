@@ -26,7 +26,6 @@ class InferenceEngine:
         self.checkpoint = checkpoint
         
         self._load_config()
-        print(f"training_config:{self.config}")
         self._load_checkpoint()
         self._load_test_loader()
     
@@ -143,7 +142,7 @@ class InferenceEngine:
                     target=targets[i],
                     score_thresh=score_thresh,
                     save_path=save_path)
-                    
+
                 count += 1
 
                 print(f"Image {i}")

@@ -3,6 +3,7 @@ from torch.utils.data import DataLoader, random_split
 import os
 import argparse 
 import json
+import wandb
 
 from model import DinoFasterRCNN
 from coco_dataset import *
