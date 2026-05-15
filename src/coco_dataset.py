@@ -28,6 +28,27 @@ def collate_fn(batch):
         targets.append(tgt)
     return images, targets
 
+# ===== SCALE BBOUNDING BOXES ========
+def scale_boxes(boxes, orig_w, orig_h,
+                target_w=224,
+                target_h=224):
+
+    scale_x = target_w / orig_w
+    scale_y = target_h / orig_h
+
+    boxes[:, [0, 2]] *= scale_x
+    boxes[:, [1, 3]] *= scale_y
+
+    return boxes
+
+# ===== TEST HORIZONTAL FLIP =====
+def horizontal_flip_boxes(boxes, width=224):
+    flipped = boxes.clone()
+
+    flipped[:, [0, 2]] = width - boxes[:, [2, 0]]
+
+    return flipped
+
 
 
 class CocoDataset(Dataset):
@@ -52,12 +73,16 @@ class CocoDataset(Dataset):
 
         img_info = self.coco.loadImgs(img_id)[0]
         img_path = os.path.join(self.img_dir, img_info['file_name'])
+        
+        try:
+            image = Image.open(img_path).convert("RGB")
+        except Exception as e:
+            raise RuntimeError(
+            f"Failed to load image: {img_path}"
+            ) from e
 
-        image = Image.open(img_path).convert("RGB")
 
         orig_w, orig_h = image.size
-
-        #print(f'original size: {orig_w}x{orig_h}')
 
         boxes = []
         labels = []
@@ -85,17 +110,15 @@ class CocoDataset(Dataset):
         image = base_transform(image)
 
         # ===== SCALE BOXES =====
-        scale_x = 224 / orig_w
-        scale_y = 224 / orig_h
-
-        boxes[:, [0, 2]] *= scale_x
-        boxes[:, [1, 3]] *= scale_y
+        boxes = scale_boxes(boxes, orig_w, orig_h,
+                target_w=224,
+                target_h=224)
 
         # ===== AUGMENTATION FOR TRAINING =====
         if self.train:
             if random.random() < 0.5:
                 image = transforms.functional.hflip(image)
-                boxes[:, [0, 2]] = 224 - boxes[:, [2, 0]]
+                boxes = horizontal_flip_boxes(boxes)
 
         return image, {"boxes": boxes, "labels": labels}
 
