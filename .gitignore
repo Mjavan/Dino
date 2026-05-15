@@ -6,6 +6,8 @@ results/
 runs/
 old_cods/
 __pycache__/
+.pytest_cache/
+src/dino.egg-info/
 
 # Ignore Python cache files
 *.pyc
