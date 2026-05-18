@@ -141,6 +141,8 @@ def create_dataloaders(img_dir,
     g = torch.Generator().manual_seed(split_seed)
    
     total_size = len(dataset)
+    if total_size == 0:
+        raise ValueError("Dataset is empty")
     val_size = int(val_ratio * total_size)
     test_size = int(test_ratio * total_size)
     train_size = total_size - val_size - test_size
