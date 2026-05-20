@@ -15,12 +15,11 @@ from utils import visualize_inference
 parser = argparse.ArgumentParser(description="Run Faster-RCNN for inference!")
 parser.add_argument("--exp_name", type=str, required=True, help="Experiment name (e.g. exp_001)")
 parser.add_argument("--checkpoint", type=str, default="best", choices=("best","last"), help="Which checkpoint to use")
-args = parser.parse_args()
 
 # class for doing inference 
 class InferenceEngine:
-    def __init__(self, exp_name, checkpoint, device="cuda", conf_thresh=0.5):
-        self.device = device
+    def __init__(self, exp_name, checkpoint, conf_thresh=0.5):
+        self.device = "cuda" if torch.cuda.is_available() else "cpu"
         self.conf_thresh = conf_thresh
         self.exp_name = exp_name
         self.checkpoint = checkpoint
@@ -156,6 +155,7 @@ class InferenceEngine:
 
 
 if __name__=="__main__":
+    args = parser.parse_args()
     engine = InferenceEngine(exp_name= args.exp_name, checkpoint=args.checkpoint)
     print("+++++++++++++++++++++++++++++++++++++++++++")
     print(f"Inference for {args.exp_name} using {args.checkpoint} model!")
