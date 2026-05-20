@@ -42,14 +42,10 @@ def test_dataset_output_structure():
     image, target = dataset[0]
 
     assert isinstance(image, torch.Tensor)
-
     assert image.shape == (3, 224, 224)
-
     assert "boxes" in target
     assert "labels" in target
-
     assert target["boxes"].dtype == torch.float32
-
     assert target["labels"].dtype == torch.long
 
 # Test bounding box scaling
