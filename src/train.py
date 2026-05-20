@@ -10,7 +10,6 @@ from coco_dataset import *
 from utils import *
 
 ## Fixing Random Seeds 
-
 def set_seed(seed):
     torch.manual_seed(seed)
     torch.cuda.manual_seed_all(seed)
